@@ -33,37 +33,28 @@
     <p class="tagline">Personal data stays on your machine when you talk to an AI.</p>
   </header>
 
+  <section>
+    <h2>Prerequisites</h2>
+    <ul>
+      <li><strong>Claude Code</strong>: Node.js 18 or newer on <code>PATH</code>.</li>
+      <li><strong>claude.ai and ChatGPT</strong>: Google Chrome 111 or newer, and <code>git</code> to fetch the code.</li>
+    </ul>
+  </section>
+
   <section class="install">
     <h2>Install</h2>
-    <p>Each environment below shows what you get before you install it.</p>
 
     <h3>Claude Code</h3>
-    <img src="/claude-code.gif" alt="mask2ai in the Claude Code terminal: a prompt with an email is blocked, the masked prompt goes through, a CSV is read with 13 values masked, and the reply shows the real values restored on screen" width="1146" height="810" loading="lazy">
-    <p>The real Claude Code terminal with the plugin loaded. The prompt with an email is blocked and a masked copy is offered. The masked prompt goes through, the file read is masked before the model sees it, and the reply comes back with placeholders that are restored on screen.</p>
-    <ol>
-      <li>Make sure Node.js 18 or newer is on your <code>PATH</code>.</li>
-      <li>Inside a Claude Code session, run:
-        <pre class="cmd"><code>/plugin marketplace add serkankorkut/mask2ai
+    <img src="/claude-code.gif" alt="mask2ai in the Claude Code terminal" width="1146" height="810" loading="lazy">
+    <pre class="cmd"><code>/plugin marketplace add serkankorkut/mask2ai
 /plugin install mask2ai@mask2ai</code><button type="button" data-copy aria-label="Copy">copy</button></pre>
-      </li>
-      <li>When asked for a scope, choose <strong>user</strong> so it applies to every project.</li>
-      <li>Start a new session. The first line reads <em>mask2ai active: personal data in prompts and tool output is masked before it reaches the model</em>.</li>
-    </ol>
-    <p>To try a checkout without installing: <code>claude --plugin-dir /path/to/mask2ai</code>.</p>
 
     <h3>claude.ai and ChatGPT in Chrome</h3>
-    <img src="/chatgpt-web.gif" alt="mask2ai on chatgpt.com: a message with an email, phone, SSN and TC number is sent, the toast reports 4 values masked, the caption shows the placeholders ChatGPT received, and ChatGPT answers without seeing the real data" width="1000" height="625" loading="lazy">
-    <p>A real chat on chatgpt.com with the extension loaded. The purple captions are added by the recorder; the text under "what ChatGPT actually received" is the prompt field captured from the outgoing request. The same extension runs on claude.ai.</p>
+    <img src="/chatgpt-web.gif" alt="mask2ai on chatgpt.com" width="1000" height="625" loading="lazy">
+    <pre class="cmd"><code>git clone https://github.com/serkankorkut/mask2ai.git</code><button type="button" data-copy aria-label="Copy">copy</button></pre>
     <ol>
-      <li>Get the code:
-        <pre class="cmd"><code>git clone https://github.com/serkankorkut/mask2ai.git</code><button type="button" data-copy aria-label="Copy">copy</button></pre>
-      </li>
-      <li>Open <code>chrome://extensions</code> and turn on <strong>Developer mode</strong>, top right.</li>
-      <li>Click <strong>Load unpacked</strong> and select the <code>mask2ai</code> folder. The card shows <em>mask2ai 0.3.0</em>.</li>
-      <li>Open claude.ai or chatgpt.com. A purple <em>mask2ai: on</em> toast appears bottom right.</li>
-      <li>Send a message with made-up data, for example an email and a phone number. The toast reports <em>masked 2 values before sending</em>.</li>
+      <li><code>chrome://extensions</code> → Developer mode → Load unpacked → select the <code>mask2ai</code> folder.</li>
     </ol>
-    <p>Chrome 111 or newer. After pulling changes, click the reload icon on the card; the version on the card must match the one in <code>manifest.json</code>.</p>
   </section>
 
   <section>
