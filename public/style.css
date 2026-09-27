@@ -25,7 +25,7 @@ main { padding-top: 4rem; padding-bottom: 3rem; }
 .mark { display: inline-block; margin: 0 0 1rem; color: var(--accent); font-size: 0.9rem; line-height: 1.2; text-align: left; }
 h1 { font-size: 2.6rem; margin: 0; letter-spacing: -0.02em; }
 .tagline { font-size: 1.1rem; color: var(--muted); margin: 0.5rem 0 0; }
-h2 { font-size: 1rem; text-transform: lowercase; letter-spacing: 0.08em; color: var(--muted); margin: 2.5rem 0 0.75rem; }
+h2 { font-size: 1rem; letter-spacing: 0.04em; color: var(--muted); margin: 2.5rem 0 0.75rem; }
 h2::before { content: "# "; }
 h3 { font-size: 1rem; margin: 1.5rem 0 0.5rem; }
 p { margin: 0 0 1rem; }
