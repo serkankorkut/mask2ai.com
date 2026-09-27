@@ -55,6 +55,7 @@
       <li><strong>claude.ai in Chrome</strong>, as an extension that rewrites the outgoing request in the page.</li>
       <li><strong>ChatGPT web in Chrome</strong>, same extension, same code.</li>
     </ul>
+    <p>The Chrome extension is called <strong>mask2ai</strong>, version 0.3.0. It is verified on claude.ai and chatgpt.com on every change by <code>node demo/verify-web.js</code>, which loads it into headless Chrome, sends a chat request from the page and checks that only placeholders leave the browser and that the page restores them.</p>
     <p>Detection covers English and Turkish formats, with checksums for cards, IBANs and TC numbers.</p>
   </section>
 
