@@ -95,6 +95,24 @@ TC kimlik no <span class="g">__PII_TCKN_f0e30d__</span>
 
   <div class="feature">
     <div class="copytext">
+      <h3>It handles files, not just text.</h3>
+      <p>In Claude Code a PDF read is redirected to a masked text extraction, so the raw PDF is never read by the model. An image read is redirected to a copy where the words that match, found by Apple Vision OCR, are blacked out in the pixels.</p>
+      <p>In Chrome, Word, Excel and PowerPoint uploads are rewritten inside the file, so formatting and images stay intact and only the text changes. Text files too. PDF and image uploads in the browser are not inspected, and a toast says so.</p>
+    </div>
+    <div class="term"><div class="bar"><i></i><i></i><i></i></div><pre><span class="d">Read customer.pdf</span>
+<span class="m">mask2ai:</span> converted PDF to text and masked 4 values
+  Name: <span class="g">__PII_NAME_3490d3__</span>   Email: <span class="g">__PII_EMAIL_ae44b4__</span>
+
+<span class="d">Read customer.png</span>
+<span class="m">mask2ai:</span> redacted 4 values in the image
+  OCR of what was sent: Customer record | Name: <span class="w">█████</span> | Email: <span class="w">█████</span>
+
+<span class="d">chatgpt.com  upload contact.docx</span>
+<span class="m">🛡 mask2ai:</span> masked 3 values in an uploaded file</pre></div>
+  </div>
+
+  <div class="feature">
+    <div class="copytext">
       <h3>It never phones home.</h3>
       <p>No server, no account, no telemetry, no dependency beyond Node.js. The hooks are child processes; the extension is three scripts in the page.</p>
       <p>Do not take this page's word for it. The repository ships a proof that starts a fake Anthropic API on localhost, drives the real Claude Code binary against it and inspects every byte it sends.</p>
@@ -116,7 +134,7 @@ TC kimlik no <span class="g">__PII_TCKN_f0e30d__</span>
   <div class="card"><h3>Cards and IBANs</h3><p>Validated with Luhn and mod 97 before masking.</p></div>
   <div class="card"><h3>National IDs and SSNs</h3><p>Turkish TC numbers with checksum, US social security numbers, passport and ID numbers after a label.</p></div>
   <div class="card"><h3>Names and addresses</h3><p>After a title, a label or a cue, or derived from a masked email. US, UK and Turkish street shapes.</p></div>
-  <div class="card"><h3>Dates of birth, plates, IPs</h3><p>Birth dates after a label, Turkish licence plates, public IPv4 addresses.</p></div>
+  <div class="card"><h3>PDFs, images and Office files</h3><p>PDF to masked text and image redaction in Claude Code on macOS. Word, Excel, PowerPoint and text uploads masked in place in Chrome.</p></div>
   <div class="card"><h3>Open source</h3><p>MIT licensed, one detection core shared by the plugin and the extension, tests in CI.</p></div>
 </section>
 

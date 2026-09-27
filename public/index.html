@@ -26,15 +26,15 @@
 <meta name="twitter:title" content="mask2ai — personal data stays on your machine when you talk to an AI">
 <meta name="twitter:description" content="mask2ai masks names, emails, phone numbers, cards, IBANs and national IDs before they leave your machine, for Claude Code, claude.ai and ChatGPT in Chrome. No server, no account, open source.">
 <meta name="twitter:image" content="https://mask2ai.com/og.png">
-<link rel="icon" href="/favicon.svg?v=0.4.0" type="image/svg+xml">
-<link rel="icon" href="/favicon-32.png?v=0.4.0" type="image/png" sizes="32x32">
-<link rel="icon" href="/favicon-16.png?v=0.4.0" type="image/png" sizes="16x16">
+<link rel="icon" href="/favicon.svg?v=0.5.0" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png?v=0.5.0" type="image/png" sizes="32x32">
+<link rel="icon" href="/favicon-16.png?v=0.5.0" type="image/png" sizes="16x16">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;600&display=swap">
 <link rel="stylesheet" href="/style.css">
 <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://mask2ai.com/#website","name":"mask2ai","url":"https://mask2ai.com/","inLanguage":"en"},{"@type":"SoftwareApplication","@id":"https://mask2ai.com/#app","name":"mask2ai","url":"https://mask2ai.com/","applicationCategory":"SecurityApplication","applicationSubCategory":"Privacy tool","operatingSystem":"macOS, Linux, Windows","softwareVersion":"0.4.0","license":"https://opensource.org/licenses/MIT","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Masks personal data (names, emails, phone numbers, card numbers, IBANs, national IDs, social security numbers, dates of birth, street addresses) with placeholders before it leaves your machine, and restores the real values on screen. Works as a Claude Code plugin and as a Chrome extension for claude.ai and ChatGPT.","featureList":["Claude Code plugin with six hooks","Chrome extension for claude.ai and chatgpt.com","English and Turkish formats with checksums for cards, IBANs and TC numbers","No server, no account, no telemetry"],"author":{"@type":"Person","name":"Serkan Korkut","url":"https://serkan.fyi/"},"codeRepository":"https://github.com/serkankorkut/mask2ai","installUrl":"https://mask2ai.com/install/"},{"@type":"WebPage","@id":"https://mask2ai.com/","url":"https://mask2ai.com/","name":"mask2ai — personal data stays on your machine when you talk to an AI","description":"mask2ai masks names, emails, phone numbers, cards, IBANs and national IDs before they leave your machine, for Claude Code, claude.ai and ChatGPT in Chrome. No server, no account, open source.","isPartOf":{"@id":"https://mask2ai.com/#website"},"about":{"@id":"https://mask2ai.com/#app"},"inLanguage":"en"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://mask2ai.com/#website","name":"mask2ai","url":"https://mask2ai.com/","inLanguage":"en"},{"@type":"SoftwareApplication","@id":"https://mask2ai.com/#app","name":"mask2ai","url":"https://mask2ai.com/","applicationCategory":"SecurityApplication","applicationSubCategory":"Privacy tool","operatingSystem":"macOS, Linux, Windows","softwareVersion":"0.5.0","license":"https://opensource.org/licenses/MIT","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Masks personal data (names, emails, phone numbers, card numbers, IBANs, national IDs, social security numbers, dates of birth, street addresses) with placeholders before it leaves your machine, and restores the real values on screen. Works as a Claude Code plugin and as a Chrome extension for claude.ai and ChatGPT.","featureList":["Claude Code plugin with six hooks","Chrome extension for claude.ai and chatgpt.com","English and Turkish formats with checksums for cards, IBANs and TC numbers","No server, no account, no telemetry"],"author":{"@type":"Person","name":"Serkan Korkut","url":"https://serkan.fyi/"},"codeRepository":"https://github.com/serkankorkut/mask2ai","installUrl":"https://mask2ai.com/install/"},{"@type":"WebPage","@id":"https://mask2ai.com/","url":"https://mask2ai.com/","name":"mask2ai — personal data stays on your machine when you talk to an AI","description":"mask2ai masks names, emails, phone numbers, cards, IBANs and national IDs before they leave your machine, for Claude Code, claude.ai and ChatGPT in Chrome. No server, no account, open source.","isPartOf":{"@id":"https://mask2ai.com/#website"},"about":{"@id":"https://mask2ai.com/#app"},"inLanguage":"en"}]}</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -143,6 +143,24 @@ TC kimlik no <span class="g">__PII_TCKN_f0e30d__</span>
 
   <div class="feature">
     <div class="copytext">
+      <h3>It handles files, not just text.</h3>
+      <p>In Claude Code a PDF read is redirected to a masked text extraction, so the raw PDF is never read by the model. An image read is redirected to a copy where the words that match, found by Apple Vision OCR, are blacked out in the pixels.</p>
+      <p>In Chrome, Word, Excel and PowerPoint uploads are rewritten inside the file, so formatting and images stay intact and only the text changes. Text files too. PDF and image uploads in the browser are not inspected, and a toast says so.</p>
+    </div>
+    <div class="term"><div class="bar"><i></i><i></i><i></i></div><pre><span class="d">Read customer.pdf</span>
+<span class="m">mask2ai:</span> converted PDF to text and masked 4 values
+  Name: <span class="g">__PII_NAME_3490d3__</span>   Email: <span class="g">__PII_EMAIL_ae44b4__</span>
+
+<span class="d">Read customer.png</span>
+<span class="m">mask2ai:</span> redacted 4 values in the image
+  OCR of what was sent: Customer record | Name: <span class="w">█████</span> | Email: <span class="w">█████</span>
+
+<span class="d">chatgpt.com  upload contact.docx</span>
+<span class="m">🛡 mask2ai:</span> masked 3 values in an uploaded file</pre></div>
+  </div>
+
+  <div class="feature">
+    <div class="copytext">
       <h3>It never phones home.</h3>
       <p>No server, no account, no telemetry, no dependency beyond Node.js. The hooks are child processes; the extension is three scripts in the page.</p>
       <p>Do not take this page's word for it. The repository ships a proof that starts a fake Anthropic API on localhost, drives the real Claude Code binary against it and inspects every byte it sends.</p>
@@ -164,7 +182,7 @@ TC kimlik no <span class="g">__PII_TCKN_f0e30d__</span>
   <div class="card"><h3>Cards and IBANs</h3><p>Validated with Luhn and mod 97 before masking.</p></div>
   <div class="card"><h3>National IDs and SSNs</h3><p>Turkish TC numbers with checksum, US social security numbers, passport and ID numbers after a label.</p></div>
   <div class="card"><h3>Names and addresses</h3><p>After a title, a label or a cue, or derived from a masked email. US, UK and Turkish street shapes.</p></div>
-  <div class="card"><h3>Dates of birth, plates, IPs</h3><p>Birth dates after a label, Turkish licence plates, public IPv4 addresses.</p></div>
+  <div class="card"><h3>PDFs, images and Office files</h3><p>PDF to masked text and image redaction in Claude Code on macOS. Word, Excel, PowerPoint and text uploads masked in place in Chrome.</p></div>
   <div class="card"><h3>Open source</h3><p>MIT licensed, one detection core shared by the plugin and the extension, tests in CI.</p></div>
 </section>
 
@@ -195,7 +213,7 @@ TC kimlik no <span class="g">__PII_TCKN_f0e30d__</span>
       <li><a href="/privacy/">Privacy</a></li>
       <li><a href="https://github.com/serkankorkut/mask2ai">GitHub</a></li>
     </ul>
-    <span>v0.4.0 · MIT · Made by <a href="https://serkan.fyi/">Serkan Korkut</a></span>
+    <span>v0.5.0 · MIT · Made by <a href="https://serkan.fyi/">Serkan Korkut</a></span>
   </div>
 </footer>
 <script src="/site.js" defer></script>
