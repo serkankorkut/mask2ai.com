@@ -1,0 +1,65 @@
+<!-- title: Docs — mask2ai -->
+<!-- description: What mask2ai detects, how the Claude Code hooks and the Chrome extension work, how placeholders are built and stored, how to verify it, and its limits. -->
+<div class="doc">
+<section class="section">
+  <h1>Docs</h1>
+  <p class="lede">One detection core, two integrations, three ways to verify it.</p>
+</section>
+<section class="section">
+  <h2>What is detected</h2>
+  <div class="table-scroll"><table>
+    <tr><th>Type</th><th>How it is found</th><th>Validation</th></tr>
+    <tr><td>Email address</td><td>pattern</td><td></td></tr>
+    <tr><td>Phone number</td><td>international <code>+..</code>, US, UK and Turkish formats</td><td></td></tr>
+    <tr><td>Payment card</td><td>13 to 16 digit shapes, spaced or plain</td><td>Luhn</td></tr>
+    <tr><td>IBAN</td><td>country code plus grouped alphanumerics</td><td>mod 97</td></tr>
+    <tr><td>Turkish TC kimlik no</td><td>11 digits</td><td>official checksum</td></tr>
+    <tr><td>US Social Security number</td><td><code>ddd-dd-dddd</code></td><td></td></tr>
+    <tr><td>Date of birth</td><td>after a label such as <code>DOB</code>, <code>date of birth</code>, <code>doğum tarihi</code></td><td></td></tr>
+    <tr><td>Passport or ID number</td><td>after a label such as <code>passport no</code>, <code>kimlik no</code>, <code>ehliyet</code></td><td></td></tr>
+    <tr><td>Turkish licence plate</td><td><code>34 ABC 123</code></td><td></td></tr>
+    <tr><td>Public IPv4 address</td><td>excludes private, loopback and link-local ranges and version strings</td><td></td></tr>
+    <tr><td>Person name</td><td>after a title (<code>Dr.</code>, <code>Sayın</code>), a cue (<code>my name is</code>, <code>Regards,</code>, <code>Benim adım</code>), a label (<code>name:</code>, <code>"firstName":</code>), or derived from a masked email</td><td>shape check</td></tr>
+    <tr><td>Street address</td><td>after a label (<code>address:</code>, <code>adres:</code>), US and UK street shapes, Turkish <code>Mah.</code> / <code>Cad.</code> / <code>Sok.</code> shapes with <code>No:</code></td><td>shape check</td></tr>
+  </table></div>
+  <p>Detection is an ordered list of patterns in <code>core/pii.js</code>. Emails run first so their digits are not later read as phones; cards, IBANs and TC numbers run before phones for the same reason. Label, title and cue patterns capture only the value, and a shape check rejects values such as <code>name: mask2ai</code> or <code>address: 0x7fff</code>. After the static pass, the local part of every masked email is split into tokens, and each token is masked where it appears capitalised or in capitals, accent-insensitively, so <code>jane.doe@</code> also hides <code>Jane</code> and <code>DOE</code> in a CSV column.</p>
+</section>
+<section class="section">
+  <h2>Placeholders</h2>
+  <p>A value becomes <code>__PII_&lt;TYPE&gt;_&lt;6 hex digits of a hash of the value&gt;__</code>. The same value yields the same placeholder in a prompt, a file read and a grep result without a lookup, hooks running in parallel cannot disagree, and after a resume a single re-read rebuilds the map. Underscores keep the token a single word for the model and harmless inside code.</p>
+</section>
+<section class="section">
+  <h2>Claude code plugin</h2>
+  <p>Claude Code runs <code>hooks/mask.js</code> once per event as a child process, with a JSON payload on stdin. The script prints a JSON decision on stdout, or nothing to leave the event untouched. <code>hooks/hooks.json</code> registers the same command for six events.</p>
+  <div class="table-scroll"><table>
+    <tr><th>Event</th><th>What mask2ai does</th></tr>
+    <tr><td><code>SessionStart</code></td><td>Shows the status line and tells the model that <code>__PII_*__</code> tokens are opaque literals to copy verbatim</td></tr>
+    <tr><td><code>UserPromptSubmit</code></td><td>On a hit, blocks the prompt with <code>decision: "block"</code>, shows the masked text and copies it to the clipboard on macOS. Hooks cannot rewrite a prompt, so you resend the masked copy</td></tr>
+    <tr><td><code>PostToolUse</code></td><td>Masks every string in <code>tool_response</code> and returns the same structure as <code>updatedToolOutput</code>, so the model only sees placeholders</td></tr>
+    <tr><td><code>PreToolUse</code></td><td>Restores placeholders in <code>tool_input</code> via <code>updatedInput</code>, so edits match the real file and commands run with real arguments</td></tr>
+    <tr><td><code>MessageDisplay</code></td><td>Restores placeholders in the streamed reply on screen only; the transcript keeps them</td></tr>
+    <tr><td><code>SessionEnd</code></td><td>Deletes the session's placeholder map</td></tr>
+  </table></div>
+  <p>The map is an append-only JSON Lines file under <code>$CLAUDE_PLUGIN_DATA/&lt;session_id&gt;.jsonl</code>, created with mode <code>0600</code>. Small appends are atomic on POSIX, so parallel tool calls never lose an entry.</p>
+</section>
+<section class="section">
+  <h2>Chrome extension</h2>
+  <p>The extension injects <code>core/pii.js</code>, <code>extension/rewrite.js</code> and <code>extension/content.js</code> into claude.ai, chatgpt.com and chat.openai.com at <code>document_start</code> in the page's main world. It wraps <code>window.fetch</code>. For requests to the chat endpoints it decodes the body, whether a JSON string, a form body, a byte array or a gzip-compressed byte array, masks the text fields, re-encodes it in the original form and forwards it. A <code>MutationObserver</code> restores placeholders in rendered text, skipping editable fields. The map lives in <code>sessionStorage</code> and is gone when the tab closes.</p>
+  <p class="note">It has been verified against the current claude.ai and chatgpt.com request formats. A change in either site's client may require an update; the headless verification below catches that.</p>
+</section>
+<section class="section">
+  <h2>Verify</h2>
+  <pre><code>npm test                  # detection, restoration, request rewriting; runs in CI
+node demo/prove.js        # fake Anthropic API on localhost, real claude binary, every request inspected
+node demo/verify-web.js   # headless Chrome loads the extension on claude.ai and chatgpt.com</code></pre>
+  <p>The proof drives two sessions: a prompt with an email must produce zero requests, and a file read must arrive as placeholders only. The web check sends a chat request from the page on each real site, including a gzip-compressed body as claude.ai uses, and asserts that only placeholders leave and that the page restores them. If you prefer your own instrument, point <code>ANTHROPIC_BASE_URL</code> at a logging proxy such as mitmproxy and read the traffic yourself.</p>
+</section>
+<section class="section">
+  <h2>Limits</h2>
+  <p>Detection is pattern based, not a language model. A name in free text with no label, title, cue or matching email nearby is not detected, and labels such as <code>name:</code> can catch values that are not personal. Semantic personal data, for example health conditions, religion, ethnicity or income stated in prose, is not detected. Images and binary attachments are not inspected. In the browser, text extracted from files uploaded to claude.ai is masked; ChatGPT file uploads are not. Claude Code hooks cannot rewrite a prompt, only block it, so a prompt containing personal data has to be resent in masked form.</p>
+</section>
+<section class="section">
+  <h2>What still leaves the machine</h2>
+  <p>Placeholders, everything the patterns do not recognise, file paths, and your prompt once you resend it in masked form. See <a href="/privacy/">Privacy</a>.</p>
+</section>
+</div>

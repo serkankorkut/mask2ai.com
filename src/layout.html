@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{title}}</title>
+<meta name="description" content="{{description}}">
+<meta name="author" content="Serkan Korkut">
+<meta name="google-site-verification" content="hCq8bLpIiYDBCToKYsrX6ovndpL8L5Of9v503jxapq8">
+<meta name="robots" content="{{robots}}">
+<meta name="theme-color" content="#fbfaf7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111316" media="(prefers-color-scheme: dark)">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="canonical" href="{{url}}">
+<meta property="og:url" content="{{url}}">
+<meta property="og:title" content="{{title}}">
+<meta property="og:description" content="{{description}}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="mask2ai">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="{{site}}/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="mask2ai: personal data stays on your machine when you talk to an AI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{title}}">
+<meta name="twitter:description" content="{{description}}">
+<meta name="twitter:image" content="{{site}}/og.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;600&display=swap">
+<link rel="stylesheet" href="/style.css">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+<script type="application/ld+json">{{jsonld}}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="brand" href="/" aria-label="mask2ai home">{{mark}}<span class="wordmark"><b>mask</b>2ai</span></a>
+  <nav aria-label="Main">
+    <a href="/install/">Install</a>
+    <a href="/docs/">Docs</a>
+    <a href="/privacy/">Privacy</a>
+    <a href="https://github.com/serkankorkut/mask2ai">GitHub</a>
+  </nav>
+</header>
+<main id="main">
+{{content}}
+</main>
+<footer class="site-footer">
+  <div class="feedback">
+    <div>
+      <h2>Something slipped through, or missing a format?</h2>
+      <p>A value that was not masked, a false positive, an environment you want covered. Every report gets read.</p>
+    </div>
+    <div class="actions">
+      <a class="button primary" href="https://github.com/serkankorkut/mask2ai/issues/new">Report an issue</a>
+      <a class="button" href="mailto:korkutserkan@outlook.com?subject=mask2ai">Contact</a>
+    </div>
+  </div>
+  <div class="footer-links">
+    <ul>
+      <li><a href="/install/">Install</a></li>
+      <li><a href="/docs/">Docs</a></li>
+      <li><a href="/privacy/">Privacy</a></li>
+      <li><a href="https://github.com/serkankorkut/mask2ai">GitHub</a></li>
+    </ul>
+    <span>v{{version}} · MIT · Made by <a href="https://serkan.fyi/">Serkan Korkut</a></span>
+  </div>
+</footer>
+<script src="/site.js" defer></script>
+</body>
+</html>

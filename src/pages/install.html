@@ -1,0 +1,50 @@
+<!-- title: Install — mask2ai -->
+<!-- description: Install mask2ai as a Claude Code plugin in two commands, or load it as a Chrome extension for claude.ai and ChatGPT. Node.js 18+, Chrome 111+. -->
+<div class="doc">
+<section class="section">
+  <h1>Install</h1>
+  <p class="lede">Two environments, one code base. Pick the one you use, or both.</p>
+</section>
+<section class="section">
+  <h2>Prerequisites</h2>
+  <div class="table-scroll"><table>
+    <tr><th>Environment</th><th>Needs</th></tr>
+    <tr><td>Claude Code</td><td>Node.js 18 or newer on <code>PATH</code></td></tr>
+    <tr><td>claude.ai and ChatGPT in Chrome</td><td>Google Chrome 111 or newer, and <code>git</code> to fetch the code</td></tr>
+  </table></div>
+</section>
+<section class="section">
+  <h2>Claude code</h2>
+  <figure class="shot"><img class="gif" src="/claude-code.gif" alt="mask2ai in the Claude Code terminal" width="1146" height="810" loading="lazy"></figure>
+  <p>Inside a Claude Code session:</p>
+  <pre><code>/plugin marketplace add serkankorkut/mask2ai
+/plugin install mask2ai@mask2ai</code></pre>
+  <p>Choose the <strong>user</strong> scope so it applies to every project. Start a new session; the first line reads <em>mask2ai active: personal data in prompts and tool output is masked before it reaches the model</em>.</p>
+  <p class="muted">To try a checkout without installing: <code>claude --plugin-dir /path/to/mask2ai</code>.</p>
+</section>
+<section class="section">
+  <h2>Claude.ai and chatgpt in chrome</h2>
+  <figure class="shot"><img class="gif" src="/chatgpt-web.gif" alt="mask2ai on chatgpt.com" width="1000" height="625" loading="lazy"></figure>
+  <pre><code>git clone https://github.com/serkankorkut/mask2ai.git</code></pre>
+  <ol class="steps">
+    <li>Open <code>chrome://extensions</code> and turn on <strong>Developer mode</strong>, top right.</li>
+    <li>Click <strong>Load unpacked</strong> and select the <code>mask2ai</code> folder. The card shows <em>mask2ai {{version}}</em>.</li>
+    <li>Open claude.ai or chatgpt.com. A purple <em>mask2ai: on</em> toast appears bottom right.</li>
+  </ol>
+  <p class="muted">After pulling changes, click the reload icon on the card. The version on the card must match the one in <code>manifest.json</code>; if it does not, Chrome is still running the old build.</p>
+</section>
+<section class="section">
+  <h2>First test</h2>
+  <p>Send a message with made-up data, for example:</p>
+  <pre><code>Write a short note to jane.doe@example.com confirming her phone +1 555 555 5555 and SSN 111-11-1111.</code></pre>
+  <p>In Chrome, a toast reports <em>masked 3 values before sending</em> and the reply is written around placeholders, shown to you with the real values. In Claude Code, the prompt is blocked, the masked copy is in your clipboard, and you paste it to send. To see what actually left, open DevTools, Network, and look at the payload of the <code>completion</code> or <code>conversation</code> request.</p>
+</section>
+<section class="section">
+  <h2>Upgrade and uninstall</h2>
+  <div class="table-scroll"><table>
+    <tr><th>Where</th><th>Upgrade</th><th>Uninstall</th></tr>
+    <tr><td>Claude Code</td><td><code>/plugin</code>, then update mask2ai</td><td><code>/plugin</code>, then uninstall or disable</td></tr>
+    <tr><td>Chrome</td><td><code>git pull</code> in the folder, then Reload on the card</td><td>Remove on the card in <code>chrome://extensions</code></td></tr>
+  </table></div>
+</section>
+</div>

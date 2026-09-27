@@ -1,0 +1,25 @@
+<!-- title: Privacy — mask2ai -->
+<!-- description: mask2ai runs on your machine, keeps its placeholder map locally, and sends nothing to anyone. What it reads, what it stores, and what still reaches the AI provider. -->
+<div class="doc">
+<section class="section">
+  <h1>Privacy</h1>
+  <p class="lede">mask2ai exists to keep personal data off the wire. It has no wire of its own.</p>
+</section>
+<section class="section">
+  <h2>What it reads</h2>
+  <p>In Claude Code: the prompt you submit, the input and output of each tool call, and the text of each reply as it streams, all handed to it by Claude Code's hook system. In Chrome: the body of chat requests to claude.ai and chatgpt.com, and the text rendered on those pages. Nothing else.</p>
+</section>
+<section class="section">
+  <h2>What it stores</h2>
+  <p>A map from placeholder to real value, so the values can be restored. In Claude Code it is a file under the plugin's data directory, one per session, mode <code>0600</code>, deleted when the session ends. In Chrome it is in the tab's <code>sessionStorage</code> and is gone when the tab closes. There is no other state, no cache and no log.</p>
+</section>
+<section class="section">
+  <h2>What it sends</h2>
+  <p>Nothing to mask2ai. There is no server, no account, no telemetry and no update check. The only traffic is the traffic you were already sending to Anthropic or OpenAI, with placeholders in place of the personal data that was recognised.</p>
+  <p>What still reaches the provider: placeholders, everything the patterns do not recognise, file paths, and your prompt once you resend it in masked form. Detection is pattern based; the <a href="/docs/">docs</a> list exactly what is and is not caught.</p>
+</section>
+<section class="section">
+  <h2>The code</h2>
+  <p>About 300 lines of JavaScript with no dependency beyond Node.js, MIT licensed, at <a href="https://github.com/serkankorkut/mask2ai">github.com/serkankorkut/mask2ai</a>. The repository ships a proof that captures every byte Claude Code sends and a headless check of the extension on both sites.</p>
+</section>
+</div>

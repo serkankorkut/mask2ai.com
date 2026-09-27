@@ -1,0 +1,17 @@
+# mask2ai
+
+> mask2ai is a free, open-source (MIT) tool that keeps personal data on your machine when you talk to an AI. Before a message, a file or a command result leaves the machine, it replaces every email, phone number, card number, IBAN, national ID, social security number, date of birth, name and street address with a placeholder such as `__PII_EMAIL_ae44b4__`. The model only ever sees placeholders; the real values are restored on screen, in files and in commands. No server, no account, no dependency beyond Node.js.
+
+## Where it works
+
+- Claude Code CLI: a plugin with six hooks covering prompts, tool output, tool input and the on-screen reply. Install with `/plugin marketplace add serkankorkut/mask2ai` then `/plugin install mask2ai@mask2ai`. Needs Node.js 18 or newer.
+- claude.ai in Chrome: an unpacked Chrome extension (version 0.3.0) that rewrites the outgoing request in the page. Needs Chrome 111 or newer.
+- ChatGPT web in Chrome: same extension, same code.
+
+## Facts
+
+- Detection is pattern based and covers English and Turkish formats, with checksums for cards, IBANs and Turkish TC numbers.
+- Names and addresses are matched when a label, title, cue or matching email is nearby; a bare name in free text is not. Health, religion or income in prose is not detected. Images are not inspected.
+- Verification shipped in the repo: `npm test`, `node demo/prove.js` (captures every byte Claude Code sends to a fake API), `node demo/verify-web.js` (headless Chrome on claude.ai and chatgpt.com).
+- Code and docs: https://github.com/serkankorkut/mask2ai
+- Author: Serkan Korkut, https://serkan.fyi

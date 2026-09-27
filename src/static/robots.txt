@@ -13,4 +13,4 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-Sitemap: https://mask2ai.com/sitemap.xml
+Sitemap: {{site}}/sitemap.xml
