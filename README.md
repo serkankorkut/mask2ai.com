@@ -9,3 +9,6 @@ npm run deploy   # production
 ```
 
 The demo GIF in `public/` is copied from the mask2ai repository's `demo/claude-code.gif`; refresh it when that recording changes. The logo brief is in `brand/logo-brief.md`.
+## Search engines
+
+`npm run indexnow` pings Bing, Yandex, Naver and Seznam (IndexNow) with every URL in `public/sitemap.xml`. Run it after a deploy that changes the page. Google ignores IndexNow; submit the sitemap once in Search Console. `og.png`, `robots.txt`, `sitemap.xml` and `llms.txt` are hand-maintained in `public/`.

@@ -4,7 +4,7 @@
   --muted: #6b675f;
   --line: #e2ded4;
   --code: #f1efe8;
-  --accent: #6b21a8;
+  --accent: #7c3aed;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -13,7 +13,7 @@
     --muted: #9a978f;
     --line: #2b2e34;
     --code: #1d2025;
-    --accent: #c084fc;
+    --accent: #a78bfa;
   }
 }
 * { box-sizing: border-box; }
@@ -22,7 +22,7 @@ body { margin: 0; }
 .wrap { max-width: 44rem; margin: 0 auto; padding: 0 1.25rem; }
 main { padding-top: 4rem; padding-bottom: 3rem; }
 .hero { text-align: center; margin-bottom: 3.5rem; }
-.mark { display: inline-block; margin: 0 0 1rem; color: var(--accent); font-size: 0.9rem; line-height: 1.2; text-align: left; }
+.logo { display: block; margin: 0 auto 1.25rem; width: 280px; max-width: 80%; height: auto; border: 0; border-radius: 0; }
 h1 { font-size: 2.6rem; margin: 0; letter-spacing: -0.02em; }
 .tagline { font-size: 1.1rem; color: var(--muted); margin: 0.5rem 0 0; }
 h2 { font-size: 1rem; letter-spacing: 0.04em; color: var(--muted); margin: 2.5rem 0 0.75rem; }
