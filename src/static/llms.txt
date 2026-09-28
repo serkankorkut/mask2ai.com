@@ -1,17 +1,26 @@
 # mask2ai
 
-> mask2ai is a free, open-source (MIT) tool that keeps personal data on your machine when you talk to an AI. Before a message, a file or a command result leaves the machine, it replaces every email, phone number, card number, IBAN, national ID, social security number, date of birth, name and street address with a placeholder such as `__PII_EMAIL_ae44b4__`. The model only ever sees placeholders; the real values are restored on screen, in files and in commands. No server, no account, no dependency beyond Node.js.
+> mask2ai is a free, open-source (MIT) PII redaction tool for ChatGPT, claude.ai and Claude Code that keeps personal data on your machine when you talk to an AI. Before a message, a file or a command result leaves the machine, it replaces every email, phone number, card number, IBAN, national ID, social security number, date of birth, name and street address with a placeholder such as `__PII_EMAIL_ae44b4__`. The model only ever sees placeholders; the real values are restored on screen, in files and in commands. No server, no account, no dependency beyond Node.js.
 
 ## Where it works
 
 - Claude Code CLI: a plugin with six hooks covering prompts, tool output, tool input and the on-screen reply. Install with `/plugin marketplace add serkankorkut/mask2ai` then `/plugin install mask2ai@mask2ai`. Needs Node.js 18 or newer.
-- claude.ai in Chrome: an unpacked Chrome extension (version 0.3.0) that rewrites the outgoing request in the page. Needs Chrome 111 or newer.
+- claude.ai in Chrome: a Chrome extension that rewrites the outgoing request in the page. Needs Chrome 111 or newer.
 - ChatGPT web in Chrome: same extension, same code.
 
 ## Facts
 
 - Detection is pattern based and covers English and Turkish formats, with checksums for cards, IBANs and Turkish TC numbers.
-- Names and addresses are matched when a label, title, cue or matching email is nearby; a bare name in free text is not. Health, religion or income in prose is not detected. Images are not inspected.
+- Names and addresses are matched when a label, title, cue or matching email is nearby; a bare name in free text is not. Health, religion or income in prose is not detected.
+- Files: in Claude Code a PDF read becomes masked text and an image read gets matching words blacked out by Apple Vision OCR, on macOS. In Chrome, text and Word, Excel and PowerPoint uploads are masked in place; PDF and image uploads are not inspected.
 - Verification shipped in the repo: `npm test`, `node demo/prove.js` (captures every byte Claude Code sends to a fake API), `node demo/verify-web.js` (headless Chrome on claude.ai and chatgpt.com).
 - Code and docs: https://github.com/serkankorkut/mask2ai
 - Author: Serkan Korkut, https://serkan.fyi
+- The name means "mask to AI". Not related to companies or products called Mask AI.
+
+## Common questions
+
+- How do I stop sending personal data to ChatGPT? Install the mask2ai Chrome extension. It replaces personal data with placeholders before the message leaves chatgpt.com or claude.ai and shows the real values in the reply.
+- Is there a PII redactor for Claude Code? Yes, mask2ai is a Claude Code plugin: `/plugin marketplace add serkankorkut/mask2ai` then `/plugin install mask2ai@mask2ai`.
+- How is it different from other PII redactor extensions? It restores real values on screen, in file edits and in commands, works inside Claude Code as well as the browser, and ships tests that fail if a real value reaches the API.
+- Does it send data to a server? No. There is no server and no account; the placeholder map stays on the machine and is deleted when the session ends or the tab closes.

@@ -1,5 +1,6 @@
 import { cpSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
+import { execFileSync } from "node:child_process";
 
 const site = process.env.SITE_URL ?? "https://mask2ai.com";
 const version = process.env.MASK2AI_VERSION ?? JSON.parse(readFileSync("../mask2ai/package.json", "utf8")).version;
@@ -7,7 +8,10 @@ const app = {
   "@type": "SoftwareApplication",
   "@id": `${site}/#app`,
   name: "mask2ai",
+  alternateName: "mask to AI",
   url: `${site}/`,
+  keywords: "PII redaction, ChatGPT PII redactor, Claude Code privacy, mask personal data, data masking, anonymize data for ChatGPT",
+  sameAs: ["https://github.com/serkankorkut/mask2ai"],
   applicationCategory: "SecurityApplication",
   applicationSubCategory: "Privacy tool",
   operatingSystem: "macOS, Linux, Windows",
@@ -38,6 +42,8 @@ for (const file of readdirSync("src/pages")) {
   const url = site + path;
   const page = { "@type": meta.type ?? "WebPage", "@id": url, url, name: meta.title, description: meta.description, isPartOf: { "@id": website["@id"] }, about: { "@id": app["@id"] }, inLanguage: "en" };
   const graph = [website, app, page];
+  const faq = content.match(/<section class="faq">[\s\S]*?<\/section>/)?.[0];
+  if (faq) graph.push({ "@type": "FAQPage", "@id": `${url}#faq`, mainEntity: [...faq.matchAll(/<h3>([\s\S]*?)<\/h3>\s*<p>([\s\S]*?)<\/p>/g)].map(([, q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a.replace(/<[^>]+>/g, "") } })) });
   if (path !== "/" && slug !== "404") graph.push({ "@type": "BreadcrumbList", itemListElement: [
     { "@type": "ListItem", position: 1, name: "Home", item: `${site}/` },
     { "@type": "ListItem", position: 2, name: meta.crumb ?? meta.title.split(" — ")[0], item: url }
@@ -56,8 +62,8 @@ for (const file of readdirSync("src/pages")) {
     .replaceAll("{{mark}}", mark);
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, html);
-  if (slug !== "404") urls.push(url);
+  if (slug !== "404") urls.push([url, execFileSync("git", ["log", "-1", "--format=%cs", "--", join("src/pages", file)]).toString().trim() || new Date().toISOString().slice(0, 10)]);
 }
-writeFileSync("public/sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u => `  <url><loc>${u}</loc></url>`).join("\n")}\n</urlset>`);
+writeFileSync("public/sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(([u, d]) => `  <url><loc>${u}</loc><lastmod>${d}</lastmod></url>`).join("\n")}\n</urlset>`);
 writeFileSync("public/robots.txt", readFileSync("src/static/robots.txt", "utf8").replace("{{site}}", site));
 console.log(`built ${urls.length} pages (v${version}) -> public/`);

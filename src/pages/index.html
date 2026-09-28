@@ -1,10 +1,10 @@
-<!-- title: mask2ai — personal data stays on your machine when you talk to an AI -->
-<!-- description: mask2ai masks names, emails, phone numbers, cards, IBANs and national IDs before they leave your machine, for Claude Code, claude.ai and ChatGPT in Chrome. No server, no account, open source. -->
+<!-- title: mask2ai — PII redaction for ChatGPT, Claude and Claude Code -->
+<!-- description: Mask personal data before it reaches ChatGPT, claude.ai or Claude Code. A free PII redactor as a Chrome extension and a Claude Code plugin: names, emails, phones, cards, IBANs and IDs become placeholders. No server. -->
 <section class="hero">
   {{logo}}
-  <h1 class="wordmark"><b>mask</b>2ai</h1>
-  <p class="tagline">Personal data stays on your machine when you talk to an AI.</p>
-  <p class="sub">A plugin for Claude Code and an extension for claude.ai and ChatGPT. Names, numbers and addresses become placeholders before they leave. You keep seeing the real values.</p>
+  <p class="wordmark"><b>mask</b>2ai</p>
+  <h1 class="tagline">Personal data stays on your machine when you talk to an AI.</h1>
+  <p class="sub">PII redaction for ChatGPT, claude.ai and Claude Code, as a Chrome extension and a Claude Code plugin. Names, numbers and addresses become placeholders before they leave. You keep seeing the real values.</p>
   <div class="install">
     <div class="os-tabs" role="tablist" aria-label="Where to install" data-os-tabs>
       <button role="tab" data-os="claude" aria-selected="true">Claude Code</button>
@@ -110,6 +110,7 @@ TC kimlik no <span class="g">__PII_TCKN_f0e30d__</span>
 <span class="d">chatgpt.com  upload contact.docx</span>
 <span class="m">🛡 mask2ai:</span> masked 3 values in an uploaded file</pre></div>
   </div>
+  <figure class="shot"><img src="/image-before-after.png" alt="demo/customer.png before and after mask2ai: the name, email, phone and SSN are blacked out in the copy Claude Code reads" width="1400" height="520" loading="lazy"><figcaption>An image read in Claude Code: the original on disk, and the redacted copy the model is given.</figcaption></figure>
 
   <div class="feature">
     <div class="copytext">
@@ -136,6 +137,26 @@ TC kimlik no <span class="g">__PII_TCKN_f0e30d__</span>
   <div class="card"><h3>Names and addresses</h3><p>After a title, a label or a cue, or derived from a masked email. US, UK and Turkish street shapes.</p></div>
   <div class="card"><h3>PDFs, images and Office files</h3><p>PDF to masked text and image redaction in Claude Code on macOS. Word, Excel, PowerPoint and text uploads masked in place in Chrome.</p></div>
   <div class="card"><h3>Open source</h3><p>MIT licensed, one detection core shared by the plugin and the extension, tests in CI.</p></div>
+</section>
+
+<section class="faq">
+  <h2>Questions</h2>
+  <h3>How do I stop sending personal data to ChatGPT?</h3>
+  <p>Install the mask2ai Chrome extension. Before a message leaves chatgpt.com or claude.ai, it replaces names, emails, phone numbers, card numbers, IBANs and national IDs with placeholders such as <code>__PII_EMAIL_ae44b4__</code>. ChatGPT only sees the placeholders. The reply on your screen shows the real values.</p>
+  <h3>Is there a PII redactor for Claude Code?</h3>
+  <p>Yes. mask2ai is a Claude Code plugin. Install it with <code>/plugin marketplace add serkankorkut/mask2ai</code> and <code>/plugin install mask2ai@mask2ai</code>. It masks personal data in prompts and in tool output, such as files and command results, before they reach the model, and restores the real values in tool calls and on screen.</p>
+  <h3>How do I anonymize data before sending it to an AI?</h3>
+  <p>Replace each personal value with a consistent placeholder, send that, and map the placeholders back in the answer. Strictly this is pseudonymisation, and it is what mask2ai does automatically. The map stays on your machine, so you do not have to redact by hand.</p>
+  <h3>Does mask2ai send my data to a server?</h3>
+  <p>No. Detection and restoration run on your machine. There is no server and no account. The placeholder map stays local and is deleted when the Claude Code session ends or the browser tab closes.</p>
+  <h3>What personal data does it detect?</h3>
+  <p>Emails, phone numbers, payment cards with a Luhn check, IBANs with a mod 97 check, Turkish TC numbers, US social security numbers, dates of birth, passport and ID numbers after a label, public IP addresses, and names and street addresses when a label, title or cue is nearby. English and Turkish formats.</p>
+  <h3>What does it not detect?</h3>
+  <p>A bare name in free text with no cue passes through. Health, religion or income stated in prose is not detected. In the browser, PDF and image uploads are not inspected. In Claude Code, PDF and image masking needs macOS.</p>
+  <h3>How is mask2ai different from other PII redactor extensions?</h3>
+  <p>It restores the real values on your screen, in file edits and in commands, so your work keeps flowing. It works inside Claude Code as well as the browser. And it ships tests that capture every request and fail if a real value gets through.</p>
+  <h3>Is mask2ai the same as Mask AI?</h3>
+  <p>No. mask2ai, as in "mask to AI", is an open source privacy tool by Serkan Korkut at github.com/serkankorkut/mask2ai. It is not related to companies or products called Mask AI.</p>
 </section>
 
 <section class="platforms">

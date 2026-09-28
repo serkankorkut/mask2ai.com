@@ -1,4 +1,5 @@
-<!-- title: Docs — mask2ai -->
+<!-- title: mask2ai docs — what the PII redactor detects and how it works -->
+<!-- crumb: Docs -->
 <!-- description: What mask2ai detects, how the Claude Code hooks and the Chrome extension work, how placeholders are built and stored, how to verify it, and its limits. -->
 <div class="doc">
 <section class="section">
@@ -35,6 +36,8 @@
   </table></div>
   <figure class="shot"><img class="gif" src="/claude-code-files.gif" alt="mask2ai in Claude Code: a PDF read is converted to masked text and an image read is redacted, and the reply shows what the model was given" width="1146" height="810" loading="lazy"></figure>
   <p class="muted">One prompt reads the sample PDF and the sample image in the real Claude Code terminal. The values in the reply are placeholders restored on screen.</p>
+  <figure class="shot"><img src="/image-before-after.png" alt="demo/customer.png before and after mask2ai: the name, email, phone and SSN are blacked out in the copy Claude Code reads" width="1400" height="520" loading="lazy"></figure>
+  <p class="muted">The image on the right is the file the Read tool actually received. The original on disk is untouched.</p>
   <p>PDF and image handling in Claude Code needs macOS with the Swift toolchain (<code>xcode-select --install</code>). The helper is compiled once on first use. On other systems PDFs and images pass through with a warning. Image redaction relies on OCR: text it cannot read, handwriting, or personal data that is not text, such as a face, is not redacted. Upload masking is verified on claude.ai; the ChatGPT two-step upload flow has not been verified.</p>
 </section>
 <section class="section">
