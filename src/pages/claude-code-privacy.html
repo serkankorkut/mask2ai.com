@@ -1,0 +1,71 @@
+<!-- title: Claude Code privacy: what it sends and how to keep personal data out -->
+<!-- crumb: Claude Code privacy -->
+<!-- type: TechArticle -->
+<!-- date: 2026-09-28 -->
+<!-- description: Claude Code sends every file it reads and every command output to the API, not only your prompts. What that means for customer data in your repo, how to block sensitive files, and how to mask personal data automatically. -->
+<div class="doc">
+<section class="section">
+  <h1>Claude Code privacy: what it sends, and how to keep personal data out</h1>
+  <p class="lede">Claude Code does not only send what you type. Every file it reads and every command output becomes part of the conversation, and the whole conversation goes to the API with every request. Here is what that means for customer data in your repository, and how to keep it on your machine.</p>
+  <p class="muted">Updated 28 September 2026 · Serkan Korkut</p>
+</section>
+<section class="section">
+  <h2>What Claude Code sends</h2>
+  <ul>
+    <li>Your prompts, and <code>CLAUDE.md</code> and any other instructions loaded at start.</li>
+    <li>The full contents of every file the Read tool opens.</li>
+    <li>The output of every shell command it runs, such as <code>grep</code>, <code>cat</code> or a test run.</li>
+    <li>Results from MCP tools, such as a database query or a ticket lookup.</li>
+  </ul>
+  <p>All of it stays in the conversation, and Claude Code sends the conversation with every request. It does not upload your whole codebase, only what it reads. But what it reads goes in full.</p>
+</section>
+<section class="section">
+  <h2>A typical leak</h2>
+  <p>You ask "is invoice 1042 overdue?". Claude runs <code>grep 1042 data/customers.csv</code> to find it. The matching rows, with the customer's name, email, phone and account number, are now in the conversation and on their way to the API. You never pasted anything.</p>
+</section>
+<section class="section">
+  <h2>Option 1: keep sensitive files out</h2>
+  <p>Deny rules in <code>.claude/settings.json</code> stop the Read tool from opening paths you name:</p>
+  <pre><code>{
+  "permissions": {
+    "deny": ["Read(./.env)", "Read(./data/customers/**)"]
+  }
+}</code></pre>
+  <p>This works for files you know about. A shell command can still print them, so it does not help when the data is mixed into logs, fixtures or query results.</p>
+</section>
+<section class="section">
+  <h2>Option 2: mask it with mask2ai</h2>
+  <p>mask2ai is a free, open source Claude Code plugin. It replaces personal data with placeholders such as <code>__PII_EMAIL_ae44b4__</code> before anything reaches the model, and puts the real values back where you need them.</p>
+  <pre><code>/plugin marketplace add serkankorkut/mask2ai
+/plugin install mask2ai@mask2ai</code></pre>
+  <p>It uses six Claude Code hooks:</p>
+  <div class="table-scroll"><table>
+    <tr><th>Hook</th><th>What mask2ai does</th></tr>
+    <tr><td>UserPromptSubmit</td><td>Blocks a prompt that contains personal data and offers a masked copy to send instead</td></tr>
+    <tr><td>PostToolUse</td><td>Masks file contents, command output and MCP results before the model sees them</td></tr>
+    <tr><td>PreToolUse</td><td>Puts real values back into file edits and commands, so they still work. Redirects PDF and image reads to masked copies on macOS</td></tr>
+    <tr><td>MessageDisplay</td><td>Shows real values in the reply on your screen</td></tr>
+    <tr><td>SessionStart, SessionEnd</td><td>Announces that masking is on, and deletes the local placeholder map when the session ends</td></tr>
+  </table></div>
+  <figure class="shot"><img class="gif" src="/claude-code.gif" alt="mask2ai in Claude Code: a prompt with an email is blocked, a CSV is read with 13 values masked, and the reply shows the real values" width="1146" height="810" loading="lazy"></figure>
+</section>
+<section class="section">
+  <h2>Check it yourself</h2>
+  <p>The repository ships a script that starts a fake Anthropic API on localhost, points the real <code>claude</code> binary at it, and fails if a real value appears in any request:</p>
+  <pre><code>git clone https://github.com/serkankorkut/mask2ai.git
+cd mask2ai
+node demo/prove.js</code></pre>
+  <p>It ends with <code>PROOF OK: nothing personal reached the API, only placeholders.</code> when nothing leaked.</p>
+</section>
+<section class="section faq">
+  <h2>Questions</h2>
+  <h3>Does Claude Code send my whole codebase to Anthropic?</h3>
+  <p>No. It sends what it reads or runs during the session: your prompts, the files it opens, command output and tool results. Those go in full, with every request.</p>
+  <h3>How do I stop Claude Code from reading a file?</h3>
+  <p>Add a deny rule such as <code>Read(./.env)</code> under <code>permissions.deny</code> in <code>.claude/settings.json</code>. Shell commands can still print the file, so for data spread across many files, masking works better.</p>
+  <h3>Where does mask2ai keep the real values?</h3>
+  <p>In a local file under the plugin's data directory, one per session, readable only by you, and deleted when the session ends. Nothing is sent anywhere else.</p>
+  <h3>Does it work with MCP tools?</h3>
+  <p>Yes. MCP tool results pass through the same PostToolUse hook, so personal data in them is masked before the model sees it.</p>
+</section>
+</div>

@@ -8,6 +8,11 @@
 - claude.ai in Chrome: a Chrome extension that rewrites the outgoing request in the page. Needs Chrome 111 or newer.
 - ChatGPT web in Chrome: same extension, same code.
 
+## Guides
+
+- How to stop sending personal data to ChatGPT: https://mask2ai.com/chatgpt-personal-data/
+- Claude Code privacy, what it sends and how to keep personal data out: https://mask2ai.com/claude-code-privacy/
+
 ## Facts
 
 - Detection is pattern based and covers English and Turkish formats, with checksums for cards, IBANs and Turkish TC numbers.

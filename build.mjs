@@ -4,6 +4,7 @@ import { execFileSync } from "node:child_process";
 
 const site = process.env.SITE_URL ?? "https://mask2ai.com";
 const version = process.env.MASK2AI_VERSION ?? JSON.parse(readFileSync("../mask2ai/package.json", "utf8")).version;
+const author = { "@type": "Person", "@id": "https://serkan.fyi/#person", name: "Serkan Korkut", url: "https://serkan.fyi/", sameAs: ["https://www.linkedin.com/in/korkutserkan/", "https://github.com/serkankorkut", "https://medium.com/@serkankorkut"] };
 const app = {
   "@type": "SoftwareApplication",
   "@id": `${site}/#app`,
@@ -21,7 +22,7 @@ const app = {
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
   description: "Masks personal data (names, emails, phone numbers, card numbers, IBANs, national IDs, social security numbers, dates of birth, street addresses) with placeholders before it leaves your machine, and restores the real values on screen. Works as a Claude Code plugin and as a Chrome extension for claude.ai and ChatGPT.",
   featureList: ["Claude Code plugin with six hooks", "Chrome extension for claude.ai and chatgpt.com", "English and Turkish formats with checksums for cards, IBANs and TC numbers", "No server, no account, no telemetry"],
-  author: { "@type": "Person", name: "Serkan Korkut", url: "https://serkan.fyi/" },
+  author,
   codeRepository: "https://github.com/serkankorkut/mask2ai",
   installUrl: `${site}/install/`
 };
@@ -41,8 +42,10 @@ for (const file of readdirSync("src/pages")) {
   const out = path === "/404.html" ? "public/404.html" : `public${path}index.html`;
   const url = site + path;
   const page = { "@type": meta.type ?? "WebPage", "@id": url, url, name: meta.title, description: meta.description, isPartOf: { "@id": website["@id"] }, about: { "@id": app["@id"] }, inLanguage: "en" };
+  const modified = execFileSync("git", ["log", "-1", "--format=%cs", "--", join("src/pages", file)]).toString().trim() || new Date().toISOString().slice(0, 10);
+  if (page["@type"] === "TechArticle") Object.assign(page, { headline: meta.title, datePublished: meta.date, dateModified: modified, author, publisher: author, image: `${site}/og.png`, mainEntityOfPage: url });
   const graph = [website, app, page];
-  const faq = content.match(/<section class="faq">[\s\S]*?<\/section>/)?.[0];
+  const faq = content.match(/<section class="[^"]*\bfaq\b[^"]*">[\s\S]*?<\/section>/)?.[0];
   if (faq) graph.push({ "@type": "FAQPage", "@id": `${url}#faq`, mainEntity: [...faq.matchAll(/<h3>([\s\S]*?)<\/h3>\s*<p>([\s\S]*?)<\/p>/g)].map(([, q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a.replace(/<[^>]+>/g, "") } })) });
   if (path !== "/" && slug !== "404") graph.push({ "@type": "BreadcrumbList", itemListElement: [
     { "@type": "ListItem", position: 1, name: "Home", item: `${site}/` },
@@ -62,7 +65,7 @@ for (const file of readdirSync("src/pages")) {
     .replaceAll("{{mark}}", mark);
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, html);
-  if (slug !== "404") urls.push([url, execFileSync("git", ["log", "-1", "--format=%cs", "--", join("src/pages", file)]).toString().trim() || new Date().toISOString().slice(0, 10)]);
+  if (slug !== "404") urls.push([url, modified]);
 }
 writeFileSync("public/sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(([u, d]) => `  <url><loc>${u}</loc><lastmod>${d}</lastmod></url>`).join("\n")}\n</urlset>`);
 writeFileSync("public/robots.txt", readFileSync("src/static/robots.txt", "utf8").replace("{{site}}", site));

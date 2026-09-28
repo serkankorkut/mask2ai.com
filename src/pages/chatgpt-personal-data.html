@@ -1,0 +1,65 @@
+<!-- title: How to stop sending personal data to ChatGPT and Claude -->
+<!-- crumb: Personal data and ChatGPT -->
+<!-- type: TechArticle -->
+<!-- date: 2026-09-28 -->
+<!-- description: Everything you paste into ChatGPT or claude.ai is sent to the provider. Three ways to keep names, emails, phone numbers and account numbers out, how to check what left your browser, and how to mask it automatically. -->
+<div class="doc">
+<section class="section">
+  <h1>How to stop sending personal data to ChatGPT</h1>
+  <p class="lede">Everything you type, paste or upload into ChatGPT or claude.ai is sent to the provider's servers. If a customer's name, email or account number is in it, that goes too. Here are three ways to keep it out, and how to check what actually left your browser.</p>
+  <p class="muted">Updated 28 September 2026 · Serkan Korkut</p>
+</section>
+<section class="section">
+  <h2>What actually gets sent</h2>
+  <p>When you press send, the page posts one request with the full text of your message, and the text of any file you attached. You can see it yourself:</p>
+  <ul>
+    <li>Open DevTools with <code>Cmd+Option+I</code> on a Mac or <code>F12</code> on Windows, and go to the Network tab.</li>
+    <li>Send a message with a made-up email, such as <code>jane.doe@example.com</code>.</li>
+    <li>Click the <code>conversation</code> request on chatgpt.com, or <code>completion</code> on claude.ai, and open its payload.</li>
+  </ul>
+  <p>What you see there is what the provider received. How long it is kept, and whether it is used to train models, depends on your plan and your data settings. Masking means the real values are never in it in the first place.</p>
+</section>
+<section class="section">
+  <h2>Three ways to keep it out</h2>
+  <div class="table-scroll"><table>
+    <tr><th>Approach</th><th>How it works</th><th>Trade-off</th></tr>
+    <tr><td>Remove it by hand</td><td>Delete names and numbers before you paste</td><td>Slow, and easy to miss one at the end of a long day</td></tr>
+    <tr><td>Company gateway</td><td>All AI traffic goes through a server that filters it</td><td>Needs IT to run it, and adds a server that sees your data</td></tr>
+    <tr><td>Mask in the browser</td><td>Personal data becomes placeholders before the request leaves</td><td>Pattern based, so it only catches what it can recognise</td></tr>
+  </table></div>
+</section>
+<section class="section">
+  <h2>Mask it automatically with mask2ai</h2>
+  <p>mask2ai is a free, open source Chrome extension for chatgpt.com and claude.ai. Before your message is sent, it replaces personal data with placeholders. The model answers around the placeholders, and the page shows you the real values.</p>
+  <pre><code>You type:       Email jane.doe@example.com and confirm her phone +1 555 555 5555
+ChatGPT gets:   Email __PII_EMAIL_ae44b4__ and confirm her phone __PII_PHONE_ddab37__
+You see:        the reply, with jane.doe@example.com and +1 555 555 5555 back in place</code></pre>
+  <p>Until the Chrome Web Store listing is live, load it from the repository:</p>
+  <pre><code>git clone https://github.com/serkankorkut/mask2ai.git</code></pre>
+  <p>Then open <code>chrome://extensions</code>, turn on Developer mode, choose Load unpacked and select the <code>mask2ai</code> folder. A "mask2ai: on" notice confirms it on claude.ai and chatgpt.com. Send the made-up email again and check the payload in the Network tab: only the placeholder is there.</p>
+  <figure class="shot"><img class="gif" src="/chatgpt-web.gif" alt="mask2ai on chatgpt.com: the message is masked before it is sent and the reply shows the real values" width="1000" height="625" loading="lazy"></figure>
+</section>
+<section class="section">
+  <h2>What it recognises</h2>
+  <ul>
+    <li>Email addresses and phone numbers in international, US, UK and Turkish formats.</li>
+    <li>Payment card numbers with a Luhn check, and IBANs with a mod 97 check.</li>
+    <li>US social security numbers and Turkish TC kimlik numbers with their checksum.</li>
+    <li>Dates of birth, passport and ID numbers after a label such as <code>DOB</code> or <code>passport no</code>.</li>
+    <li>Names and street addresses when a label, title or cue is nearby, or when a matching email was found.</li>
+    <li>Word, Excel, PowerPoint and text file uploads on claude.ai, masked inside the file.</li>
+  </ul>
+  <p>It does not catch a bare name with no cue around it, or health, religion or income written in prose. PDF and image uploads in the browser are not inspected, and a notice tells you so. The full list is in the <a href="/docs/">docs</a>.</p>
+</section>
+<section class="section faq">
+  <h2>Questions</h2>
+  <h3>Does ChatGPT keep what I paste?</h3>
+  <p>Your messages are sent to and processed on OpenAI's servers. How long they are kept and whether they are used for training depends on your plan and your data controls. If the personal data was masked before sending, it is not in what they keep.</p>
+  <h3>Is masking the same as anonymization?</h3>
+  <p>Not quite. Replacing values with placeholders you can map back is pseudonymisation. It removes the real values from what the AI sees, but the mapping still exists on your machine.</p>
+  <h3>Does masking make it fine to use ChatGPT with customer data?</h3>
+  <p>It reduces what you share, which helps. It does not decide on its own whether a use is allowed under GDPR, KVKK or your company's policy. Check that with whoever owns data protection where you work.</p>
+  <h3>Does it work with file uploads?</h3>
+  <p>On claude.ai, text files and Word, Excel and PowerPoint files are masked inside the file before upload, with formatting untouched. PDF and image uploads are not inspected in the browser.</p>
+</section>
+</div>
