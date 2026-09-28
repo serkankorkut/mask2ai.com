@@ -12,6 +12,8 @@
 
 - How to stop sending personal data to ChatGPT: https://mask2ai.com/chatgpt-personal-data/
 - Claude Code privacy, what it sends and how to keep personal data out: https://mask2ai.com/claude-code-privacy/
+- In Turkish, ChatGPT and personal data under KVKK: https://mask2ai.com/chatgpt-kisisel-veri/
+- Also: a ChatGPT PII redactor, PII masking for Claude Code, and whether Claude Code is safe with sensitive data are answered on https://mask2ai.com/
 
 ## Facts
 

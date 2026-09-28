@@ -1,0 +1,78 @@
+<!-- title: ChatGPT'ye kişisel veri göndermeden nasıl kullanılır? KVKK ve maskeleme -->
+<!-- crumb: ChatGPT ve kişisel veri -->
+<!-- type: TechArticle -->
+<!-- date: 2026-09-28 -->
+<!-- lang: tr -->
+<!-- translation: /chatgpt-personal-data/ -->
+<!-- description: ChatGPT'ye yazdığınız her şey OpenAI'ın sunucularına gider. Müşteri adı, TC kimlik numarası, telefon ve IBAN göndermeden ChatGPT ve Claude'u kullanmanın yolları, KVKK açısından dikkat edilecekler ve otomatik maskeleme. -->
+<div class="doc">
+<section class="section">
+  <h1>ChatGPT'ye kişisel veri göndermeden nasıl kullanılır?</h1>
+  <p class="lede">ChatGPT'ye ya da claude.ai'ye yazdığınız, yapıştırdığınız ve yüklediğiniz her şey sağlayıcının sunucularına gider. Mesajda bir müşterinin adı, TC kimlik numarası, telefonu ya da IBAN'ı varsa onlar da gider. Bu yazıda neyin gönderildiğini nasıl göreceğinizi, KVKK açısından neden önemli olduğunu ve kişisel veriyi otomatik olarak nasıl maskeleyeceğinizi anlatıyorum.</p>
+  <p class="muted">Güncelleme: 28 Eylül 2026 · Serkan Korkut</p>
+</section>
+<section class="section">
+  <h2>Aslında ne gönderiliyor?</h2>
+  <p>Gönder'e bastığınızda sayfa, mesajınızın tam metnini ve eklediğiniz dosyanın içeriğini tek bir istekle gönderir. Bunu kendiniz görebilirsiniz:</p>
+  <ul>
+    <li>Mac'te <code>Cmd+Option+I</code>, Windows'ta <code>F12</code> ile Geliştirici Araçları'nı açın ve Network sekmesine geçin.</li>
+    <li>Uydurma bir e-posta adresiyle mesaj gönderin, örneğin <code>jane.doe@example.com</code>.</li>
+    <li>chatgpt.com'da <code>conversation</code>, claude.ai'de <code>completion</code> isteğine tıklayın ve gövdesine bakın.</li>
+  </ul>
+  <p>Orada gördüğünüz metin, sağlayıcının aldığı metindir. Ne kadar süre saklanacağı ve model eğitiminde kullanılıp kullanılmayacağı planınıza ve veri ayarlarınıza bağlıdır.</p>
+</section>
+<section class="section">
+  <h2>KVKK açısından neden önemli?</h2>
+  <p>6698 sayılı Kişisel Verilerin Korunması Kanunu, kişisel veriyi işleyen herkese yükümlülük getirir. Bir müşterinin bilgisini ChatGPT'ye yapıştırdığınızda o veriyi yurt dışındaki bir hizmet sağlayıcıya göndermiş olursunuz. Bu da aydınlatma, açık rıza ve yurt dışına aktarım gibi soruları gündeme getirebilir.</p>
+  <p>Hangi kullanımın uygun olduğuna şirketinizin veri sorumlusu ya da hukuk birimi karar verir. Maskeleme bu kararın yerini tutmaz, ama gönderilen kişisel veriyi en baştan ortadan kaldırır.</p>
+</section>
+<section class="section">
+  <h2>Kişisel veriyi dışarıda tutmanın üç yolu</h2>
+  <div class="table-scroll"><table>
+    <tr><th>Yol</th><th>Nasıl çalışır</th><th>Bedeli</th></tr>
+    <tr><td>Elle silmek</td><td>Yapıştırmadan önce isimleri ve numaraları silersiniz</td><td>Yavaş, ve uzun bir günün sonunda birini atlamak kolay</td></tr>
+    <tr><td>Şirket ağ geçidi</td><td>Tüm yapay zekâ trafiği, filtreleyen bir sunucudan geçer</td><td>BT ekibinin kurması gerekir, ve verinizi gören bir sunucu daha eklenir</td></tr>
+    <tr><td>Tarayıcıda maskelemek</td><td>Kişisel veri, istek gönderilmeden önce yer tutucuya dönüşür</td><td>Desen tabanlıdır, yalnızca tanıyabildiğini yakalar</td></tr>
+  </table></div>
+</section>
+<section class="section">
+  <h2>mask2ai ile otomatik maskeleme</h2>
+  <p>mask2ai, chatgpt.com ve claude.ai için ücretsiz ve açık kaynaklı bir Chrome eklentisi. Mesajınız gönderilmeden önce kişisel verileri yer tutuculara çevirir. Model yer tutucularla cevap verir, sayfa size gerçek değerleri gösterir.</p>
+  <pre><code>Siz yazarsınız:  Sayın John Doe, +90 555 555 55 55 numaranız, TC kimlik no 22222222220
+                 ve TR33 0006 1005 1978 6457 8413 26 IBAN bilginiz kaydedildi.
+ChatGPT alır:    Sayın __PII_NAME_ca4a03__, __PII_PHONE_81ef7d__ numaranız, TC kimlik no
+                 __PII_TCKN_97e0b6__ ve __PII_IBAN_d9af0e__ IBAN bilginiz kaydedildi.
+Siz görürsünüz:  cevabı, gerçek değerler yerine konmuş olarak</code></pre>
+  <p>Chrome Web Mağazası listesi yayınlanana kadar eklentiyi depodan yükleyin:</p>
+  <pre><code>git clone https://github.com/serkankorkut/mask2ai.git</code></pre>
+  <p>Sonra <code>chrome://extensions</code> sayfasını açın, Geliştirici modunu açın, "Paketlenmemiş öğe yükle" ile <code>mask2ai</code> klasörünü seçin. claude.ai ya da chatgpt.com'da "mask2ai: on" bildirimi eklentinin çalıştığını gösterir. Uydurma e-postayla tekrar deneyin ve Network sekmesine bakın: yalnızca yer tutucu gider.</p>
+</section>
+<section class="section">
+  <h2>Neleri tanır?</h2>
+  <ul>
+    <li>E-posta adresleri, ve +90 dahil Türk, ABD ve İngiltere formatlarında telefon numaraları.</li>
+    <li>TC kimlik numaraları, resmî kontrol hanesi algoritmasıyla doğrulanarak.</li>
+    <li>Luhn kontrolüyle kart numaraları, mod 97 kontrolüyle IBAN'lar.</li>
+    <li>"Doğum tarihi", "kimlik no", "pasaport no" ya da "ehliyet" etiketinden sonra gelen değerler.</li>
+    <li><code>34 ABC 123</code> gibi araç plakaları.</li>
+    <li>"Sayın", "Benim adım" gibi bir ipucu, bir etiket ya da eşleşen bir e-posta varsa isimler.</li>
+    <li>Mah., Cad., Sok. ve No: içeren adresler.</li>
+    <li>claude.ai'de Word, Excel, PowerPoint ve metin dosyası yüklemeleri, dosyanın içinde maskelenerek.</li>
+  </ul>
+  <p>Yanında hiçbir ipucu olmadan geçen bir ismi, ya da düz yazıyla anlatılan sağlık, din veya gelir bilgisini tanımaz. Tarayıcıda PDF ve görsel yüklemeleri incelenmez, bir bildirim bunu söyler. Tam liste <a href="/docs/">belgelerde</a>.</p>
+  <p>Claude Code kullanıyorsanız mask2ai bir eklenti olarak da çalışır ve okuduğu dosyalardaki kişisel veriyi de maskeler. <a href="/claude-code-privacy/">Claude Code'un ne gönderdiği</a> (İngilizce).</p>
+</section>
+<section class="section faq">
+  <h2>Sorular</h2>
+  <h3>ChatGPT'ye müşteri verisi yazmak KVKK'ya aykırı mı?</h3>
+  <p>Duruma göre değişir: verinin türüne, amaca, aydınlatmaya ve rızaya bağlıdır. Bu kararı şirketinizin veri sorumlusu verir. Maskeleme, gönderilen kişisel veriyi en baştan ortadan kaldırarak riski azaltır.</p>
+  <h3>ChatGPT yazdıklarımı saklıyor mu?</h3>
+  <p>Mesajlarınız OpenAI'ın sunucularına gönderilir ve orada işlenir. Ne kadar saklandıkları ve eğitimde kullanılıp kullanılmadıkları planınıza ve veri kontrolleri ayarlarınıza bağlıdır. Veri gönderilmeden önce maskelendiyse, saklanan metinde gerçek değerler yoktur.</p>
+  <h3>Maskeleme anonimleştirme midir?</h3>
+  <p>Tam olarak değil. Değerleri geri çevrilebilir yer tutucularla değiştirmek takma ad kullanmadır. Yapay zekânın gördüğü metinden gerçek değerleri çıkarır, ama eşleşme tablosu sizin bilgisayarınızda durur.</p>
+  <h3>TC kimlik numarasını tanıyor mu?</h3>
+  <p>Evet. 11 haneli numarayı resmî kontrol hanesi algoritmasıyla doğrular, bu yüzden sipariş numarası gibi rastgele 11 haneli sayıları maskelemez.</p>
+  <h3>mask2ai verimi bir sunucuya gönderiyor mu?</h3>
+  <p>Hayır. Tanıma ve geri çevirme bilgisayarınızda, sayfanın içinde çalışır. Sunucu yok, hesap yok. Eşleşme tablosu sekmede durur ve sekmeyi kapattığınızda silinir.</p>
+</section>
+</div>

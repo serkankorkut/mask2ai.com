@@ -141,10 +141,14 @@ TC kimlik no <span class="g">__PII_TCKN_f0e30d__</span>
 
 <section class="faq">
   <h2>Questions</h2>
+  <h3>What is a ChatGPT PII redactor?</h3>
+  <p>A tool that removes personally identifiable information, PII for short, from what you send to ChatGPT. mask2ai does this with PII masking: each value becomes a placeholder before the message leaves your browser, and the real value comes back in the reply on your screen. It runs locally, with no server in between.</p>
   <h3>How do I stop sending personal data to ChatGPT?</h3>
   <p>Install the mask2ai Chrome extension. Before a message leaves chatgpt.com or claude.ai, it replaces names, emails, phone numbers, card numbers, IBANs and national IDs with placeholders such as <code>__PII_EMAIL_ae44b4__</code>. ChatGPT only sees the placeholders. The reply on your screen shows the real values. <a href="/chatgpt-personal-data/">The full guide</a>.</p>
   <h3>Is there a PII redactor for Claude Code?</h3>
   <p>Yes. mask2ai is a Claude Code plugin. Install it with <code>/plugin marketplace add serkankorkut/mask2ai</code> and <code>/plugin install mask2ai@mask2ai</code>. It masks personal data in prompts and in tool output, such as files and command results, before they reach the model, and restores the real values in tool calls and on screen. <a href="/claude-code-privacy/">What Claude Code sends, and how to keep it out</a>.</p>
+  <h3>Is Claude Code safe to use with sensitive data?</h3>
+  <p>Claude Code sends everything it reads to the API: prompts, file contents, command output and tool results. With customer data in your repository, that includes names, emails and account numbers. mask2ai masks that sensitive data in the Claude Code hooks before it leaves your machine. <a href="/claude-code-privacy/">What Claude Code sends</a>.</p>
   <h3>How do I anonymize data before sending it to an AI?</h3>
   <p>Replace each personal value with a consistent placeholder, send that, and map the placeholders back in the answer. Strictly this is pseudonymisation, and it is what mask2ai does automatically. The map stays on your machine, so you do not have to redact by hand.</p>
   <h3>Does mask2ai send my data to a server?</h3>

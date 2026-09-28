@@ -51,7 +51,13 @@ for (const file of readdirSync("src/pages")) {
     { "@type": "ListItem", position: 1, name: "Home", item: `${site}/` },
     { "@type": "ListItem", position: 2, name: meta.crumb ?? meta.title.split(" — ")[0], item: url }
   ] });
+  const lang = meta.lang ?? "en";
+  page.inLanguage = lang;
+  const alternates = meta.translation ? [[lang, url], [lang === "en" ? "tr" : "en", site + meta.translation]].map(([l, u]) => `<link rel="alternate" hreflang="${l}" href="${u}">`).join("\n") + `\n<link rel="alternate" hreflang="x-default" href="${lang === "en" ? url : site + meta.translation}">` : "";
   const html = layout
+    .replace('<html lang="en">', `<html lang="${lang}">`)
+    .replace('<meta property="og:locale" content="en_US">', `<meta property="og:locale" content="${lang === "tr" ? "tr_TR" : "en_US"}">`)
+    .replace('<link rel="canonical" href="{{url}}">', `<link rel="canonical" href="{{url}}">${alternates ? "\n" + alternates : ""}`)
     .replaceAll("{{title}}", meta.title)
     .replaceAll("{{description}}", meta.description)
     .replaceAll("{{url}}", url)

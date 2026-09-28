@@ -2,7 +2,7 @@
 <!-- crumb: Claude Code privacy -->
 <!-- type: TechArticle -->
 <!-- date: 2026-09-28 -->
-<!-- description: Claude Code sends every file it reads and every command output to the API, not only your prompts. What that means for customer data in your repo, how to block sensitive files, and how to mask personal data automatically. -->
+<!-- description: Is Claude Code safe with sensitive data? It sends every file it reads and every command output to the API. How to block sensitive files, and how PII masking keeps personal data on your machine. -->
 <div class="doc">
 <section class="section">
   <h1>Claude Code privacy: what it sends, and how to keep personal data out</h1>
@@ -59,6 +59,10 @@ node demo/prove.js</code></pre>
 </section>
 <section class="section faq">
   <h2>Questions</h2>
+  <h3>Is Claude Code safe to use with sensitive data?</h3>
+  <p>Claude Code itself runs on your machine, but everything it reads goes to the API in full. Sensitive data in files, logs or query results is sent unless you keep it out. Deny rules block the files you know about. PII masking with mask2ai covers the rest, because it works on whatever the tools return.</p>
+  <h3>What is PII masking in Claude Code?</h3>
+  <p>Replacing personally identifiable information with placeholders in prompts and tool output before they reach the model, and putting the real values back in tool input and on screen. mask2ai does this with Claude Code hooks, so Claude can still edit files and run commands that contain the real values.</p>
   <h3>Does Claude Code send my whole codebase to Anthropic?</h3>
   <p>No. It sends what it reads or runs during the session: your prompts, the files it opens, command output and tool results. Those go in full, with every request.</p>
   <h3>How do I stop Claude Code from reading a file?</h3>
