@@ -33,6 +33,7 @@
     <tr><td>Office: .docx, .xlsx, .pptx</td><td>read through scripts, whose text output is masked</td><td>masked in place: the XML text inside the zip is rewritten, formatting and images untouched</td></tr>
     <tr><td>PDF</td><td>the Read is redirected to a masked text extraction (PDFKit); the raw PDF is never read by the model. A PDF with no extractable text is withheld</td><td>uploaded uninspected, a toast says so</td></tr>
     <tr><td>Image: .png, .jpg, .gif, .webp</td><td>the Read is redirected to a copy with matching words blacked out, found by Apple Vision OCR</td><td>uploaded uninspected, a toast says so</td></tr>
+    <tr><td>Image pasted into the prompt</td><td>the prompt is blocked when OCR finds personal data in it; a redacted copy is written beside the original and named in the message, attach that instead</td><td>not inspected</td></tr>
   </table></div>
   <figure class="shot"><img class="gif" src="/claude-code-files.gif" alt="mask2ai in Claude Code: a PDF read is converted to masked text and an image read is redacted, and the reply shows what the model was given" width="1146" height="810" loading="lazy"></figure>
   <p class="muted">One prompt reads the sample PDF and the sample image in the real Claude Code terminal. The values in the reply are placeholders restored on screen.</p>
