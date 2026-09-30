@@ -1,4 +1,4 @@
-import { cpSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { execFileSync } from "node:child_process";
 
@@ -26,6 +26,10 @@ const app = {
   codeRepository: "https://github.com/serkankorkut/mask2ai",
   installUrl: `${site}/install/`
 };
+const storeIdFile = "../mask2ai/store/id.txt";
+const storeId = (process.env.CHROME_STORE_ID ?? (existsSync(storeIdFile) ? readFileSync(storeIdFile, "utf8") : "")).trim();
+const storeBadges = storeId ? `    <a href="https://chromewebstore.google.com/detail/${storeId}"><img src="https://img.shields.io/chrome-web-store/users/${storeId}?style=flat-square&color=7c3aed&label=chrome%20users" alt="Chrome Web Store users" height="20"></a>
+    <a href="https://chromewebstore.google.com/detail/${storeId}"><img src="https://img.shields.io/chrome-web-store/v/${storeId}?style=flat-square&color=7c3aed&label=chrome%20web%20store" alt="Chrome Web Store version" height="20"></a>` : "";
 const website = { "@type": "WebSite", "@id": `${site}/#website`, name: "mask2ai", url: `${site}/`, inLanguage: "en" };
 const layout = readFileSync("src/layout.html", "utf8");
 const logo = readFileSync("src/logo.svg", "utf8").trim();
@@ -68,7 +72,8 @@ for (const file of readdirSync("src/pages")) {
     .replaceAll(`<a href="${path}"`, `<a href="${path}" aria-current="page"`)
     .replace("{{content}}", content)
     .replaceAll("{{logo}}", logo)
-    .replaceAll("{{mark}}", mark);
+    .replaceAll("{{mark}}", mark)
+    .replace("{{storebadges}}", storeBadges);
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, html);
   if (slug !== "404") urls.push([url, modified]);
