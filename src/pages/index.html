@@ -73,7 +73,7 @@ A masked copy is in your clipboard, paste it to resend:
   <div class="feature">
     <div class="copytext">
       <h3>It checks, it does not guess.</h3>
-      <p>Card numbers must pass Luhn, IBANs mod 97, Turkish TC numbers their checksum. Timestamps, version strings, private IP addresses and package names are left alone.</p>
+      <p>Card numbers must pass Luhn, IBANs mod 97, Turkish ID numbers their checksum. Timestamps, version strings, private IP addresses and package names are left alone.</p>
       <p>Names and addresses are matched when there is a signal nearby: a title, a label, a cue like "my name is", or the email that belongs to the person. English and Turkish formats.</p>
     </div>
     <div class="term"><div class="bar"><i></i><i></i><i></i></div><pre><span class="w">4111 1111 1111 1111</span>   card    <span class="g">Luhn ✓</span>      → __PII_CARD_14a1a1__
@@ -140,7 +140,7 @@ TC kimlik no <span class="g">__PII_TCKN_f0e30d__</span>
 <section class="grid3" aria-label="What is detected">
   <div class="card"><h3>Emails and phones</h3><p>International, US, UK and Turkish phone formats.</p></div>
   <div class="card"><h3>Cards and IBANs</h3><p>Validated with Luhn and mod 97 before masking.</p></div>
-  <div class="card"><h3>National IDs and SSNs</h3><p>Turkish TC numbers with checksum, US social security numbers, passport and ID numbers after a label.</p></div>
+  <div class="card"><h3>National IDs and SSNs</h3><p>Turkish ID numbers with checksum, US social security numbers, passport and ID numbers after a label.</p></div>
   <div class="card"><h3>Names and addresses</h3><p>After a title, a label or a cue, or derived from a masked email. US, UK and Turkish street shapes.</p></div>
   <div class="card"><h3>PDFs, images and Office files</h3><p>PDF to masked text and image redaction in Claude Code on macOS. Word, Excel, PowerPoint and text uploads masked in place in Chrome.</p></div>
   <div class="card"><h3>Open source</h3><p>MIT licensed, one detection core shared by the plugin and the extension, tests in CI.</p></div>
@@ -161,7 +161,7 @@ TC kimlik no <span class="g">__PII_TCKN_f0e30d__</span>
   <h3>Does mask2ai send my data to a server?</h3>
   <p>No. Detection and restoration run on your machine. There is no server and no account. The placeholder map stays local and is deleted when the Claude Code session ends or the browser tab closes.</p>
   <h3>What personal data does it detect?</h3>
-  <p>Emails, phone numbers, payment cards with a Luhn check, IBANs with a mod 97 check, Turkish TC numbers, US social security numbers, dates of birth, passport and ID numbers after a label, public IP addresses, and names and street addresses when a label, title or cue is nearby. English and Turkish formats.</p>
+  <p>Emails, phone numbers, payment cards with a Luhn check, IBANs with a mod 97 check, Turkish ID numbers, US social security numbers, dates of birth, passport and ID numbers after a label, public IP addresses, and names and street addresses when a label, title or cue is nearby. English and Turkish formats.</p>
   <h3>What does it not detect?</h3>
   <p>A bare name in free text with no cue passes through. Health, religion or income stated in prose is not detected. In the browser, PDF and image uploads are not inspected. In Claude Code, PDF and image masking needs macOS.</p>
   <h3>How is mask2ai different from other PII redactor extensions?</h3>

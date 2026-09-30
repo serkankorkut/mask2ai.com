@@ -17,7 +17,7 @@
 
 ## Facts
 
-- Detection is pattern based and covers English and Turkish formats, with checksums for cards, IBANs and Turkish TC numbers.
+- Detection is pattern based and covers English and Turkish formats, with checksums for cards, IBANs and Turkish ID numbers.
 - Names and addresses are matched when a label, title, cue or matching email is nearby; a bare name in free text is not. Health, religion or income in prose is not detected.
 - Files: in Claude Code a PDF read becomes masked text and an image read gets matching words blacked out by Apple Vision OCR, on macOS. In Chrome, text and Word, Excel and PowerPoint uploads are masked in place; PDF and image uploads are not inspected.
 - Verification shipped in the repo: `npm test`, `node demo/prove.js` (captures every byte Claude Code sends to a fake API), `node demo/verify-web.js` (headless Chrome on claude.ai and chatgpt.com).

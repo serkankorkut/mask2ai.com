@@ -14,7 +14,7 @@
     <tr><td>Phone number</td><td>international <code>+..</code>, US, UK and Turkish formats</td><td></td></tr>
     <tr><td>Payment card</td><td>13 to 16 digit shapes, spaced or plain</td><td>Luhn</td></tr>
     <tr><td>IBAN</td><td>country code plus grouped alphanumerics</td><td>mod 97</td></tr>
-    <tr><td>Turkish TC kimlik no</td><td>11 digits</td><td>official checksum</td></tr>
+    <tr><td>Turkish ID number (TC Kimlik No)</td><td>11 digits</td><td>official checksum</td></tr>
     <tr><td>US Social Security number</td><td><code>ddd-dd-dddd</code></td><td></td></tr>
     <tr><td>Date of birth</td><td>after a label such as <code>DOB</code>, <code>date of birth</code>, <code>doğum tarihi</code></td><td></td></tr>
     <tr><td>Passport or ID number</td><td>after a label such as <code>passport no</code>, <code>kimlik no</code>, <code>ehliyet</code></td><td></td></tr>
@@ -23,7 +23,7 @@
     <tr><td>Person name</td><td>after a title (<code>Dr.</code>, <code>Sayın</code>), a cue (<code>my name is</code>, <code>Regards,</code>, <code>Benim adım</code>), a label (<code>name:</code>, <code>"firstName":</code>), or derived from a masked email</td><td>shape check</td></tr>
     <tr><td>Street address</td><td>after a label (<code>address:</code>, <code>adres:</code>), US and UK street shapes, Turkish <code>Mah.</code> / <code>Cad.</code> / <code>Sok.</code> shapes with <code>No:</code></td><td>shape check</td></tr>
   </table></div>
-  <p>Detection is an ordered list of patterns in <code>core/pii.js</code>. Emails run first so their digits are not later read as phones; cards, IBANs and TC numbers run before phones for the same reason. Label, title and cue patterns capture only the value, and a shape check rejects values such as <code>name: mask2ai</code> or <code>address: 0x7fff</code>. After the static pass, the local part of every masked email is split into tokens, and each token is masked where it appears capitalised or in capitals, accent-insensitively, so <code>jane.doe@</code> also hides <code>Jane</code> and <code>DOE</code> in a CSV column.</p>
+  <p>Detection is an ordered list of patterns in <code>core/pii.js</code>. Emails run first so their digits are not later read as phones; cards, IBANs and Turkish ID numbers run before phones for the same reason. Label, title and cue patterns capture only the value, and a shape check rejects values such as <code>name: mask2ai</code> or <code>address: 0x7fff</code>. After the static pass, the local part of every masked email is split into tokens, and each token is masked where it appears capitalised or in capitals, accent-insensitively, so <code>jane.doe@</code> also hides <code>Jane</code> and <code>DOE</code> in a CSV column.</p>
 </section>
 <section class="section">
   <h2>Files</h2>
