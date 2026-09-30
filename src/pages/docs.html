@@ -64,6 +64,23 @@
   <p class="note">It has been verified against the current claude.ai and chatgpt.com request formats. A change in either site's client may require an update; the headless verification below catches that.</p>
 </section>
 <section class="section">
+  <h2>Configuration</h2>
+  <p>Everything is on by default. One JSON object turns detector types off, adds your own patterns, or lists values that must never be masked. The same object works in Claude Code and in the Chrome extension.</p>
+  <pre><code>{
+  "disable": ["TCKN", "PLATE"],
+  "extra": [{ "type": "EMPLOYEE_ID", "pattern": "EMP-\\d{6}" }],
+  "allow": ["support@acme.com"]
+}</code></pre>
+  <div class="table-scroll"><table>
+    <tr><th>Key</th><th>Meaning</th></tr>
+    <tr><td><code>disable</code></td><td>Types to switch off. One of <code>EMAIL</code>, <code>IBAN</code>, <code>CARD</code>, <code>TCKN</code>, <code>SSN</code>, <code>PHONE</code>, <code>ADDRESS</code>, <code>DOB</code>, <code>ID</code>, <code>PLATE</code>, <code>IP</code>, <code>NAME</code>. Country-specific detectors such as the Turkish ID number or licence plate are the usual candidates.</td></tr>
+    <tr><td><code>extra</code></td><td>Your own detectors: a <code>type</code> name that becomes the placeholder label and a JavaScript regular expression in <code>pattern</code>, with optional <code>flags</code>. Matches are masked like everything else and restored the same way.</td></tr>
+    <tr><td><code>allow</code></td><td>Exact values that are never masked, such as a shared support address that is not personal.</td></tr>
+  </table></div>
+  <p><strong>Claude Code</strong> reads, in this order, the file named in <code>MASK2AI_CONFIG</code>, then <code>.mask2ai.json</code> in the working directory, then <code>~/.mask2ai/config.json</code>. The first one found wins, and the session start line names it. A file that does not parse is ignored and the line says so.</p>
+  <p><strong>Chrome</strong>: right-click the mask2ai icon, choose Options, paste the JSON and save. It is kept in Chrome storage and applies after the tab reloads.</p>
+</section>
+<section class="section">
   <h2>Verify</h2>
   <pre><code>npm test                  # detection, restoration, request rewriting; runs in CI
 node demo/prove.js        # fake Anthropic API on localhost, real claude binary, every request inspected
