@@ -4,7 +4,7 @@
 
 ## Where it works
 
-- Claude Code CLI: a plugin with six hooks covering prompts, tool output, tool input and the on-screen reply. Install with `/plugin marketplace add serkankorkut/mask2ai` then `/plugin install mask2ai@mask2ai`. Needs Node.js 18 or newer.
+- Claude Code CLI: a plugin with six hooks covering prompts, tool output, tool input and the on-screen reply. Install with `/plugin install mask2ai --marketplace serkankorkut/mask2ai`. Needs Node.js 18 or newer.
 - claude.ai in Chrome: a Chrome extension that rewrites the outgoing request in the page. Needs Chrome 111 or newer.
 - ChatGPT web in Chrome: same extension, same code.
 

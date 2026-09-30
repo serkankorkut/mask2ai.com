@@ -19,11 +19,9 @@
       <button role="tab" data-os="chrome" aria-selected="false">Chrome</button>
     </div>
     <div data-os-panel="claude">
-      <div class="cmd"><pre id="cmd-claude"><span class="p">&gt; </span>/plugin marketplace add serkankorkut/mask2ai
-<span class="p">&gt; </span>/plugin install mask2ai@mask2ai</pre><button class="copy" data-copy="cmd-claude-raw" type="button">Copy</button></div>
-      <span id="cmd-claude-raw" hidden>/plugin marketplace add serkankorkut/mask2ai
-/plugin install mask2ai@mask2ai</span>
-      <p class="hint">Type both in a Claude Code session and choose the user scope. Needs Node.js 18 or newer. <a href="/install/">Details</a></p>
+      <div class="cmd"><pre id="cmd-claude"><span class="p">&gt; </span>/plugin install mask2ai --marketplace serkankorkut/mask2ai</pre><button class="copy" data-copy="cmd-claude-raw" type="button">Copy</button></div>
+      <span id="cmd-claude-raw" hidden>/plugin install mask2ai --marketplace serkankorkut/mask2ai</span>
+      <p class="hint">Type it in a Claude Code session, confirm the source and choose the user scope. Needs Node.js 18 or newer and Claude Code 2.1.275 or newer. <a href="/install/">Details</a></p>
     </div>
     <div data-os-panel="chrome" hidden>
       <div class="cmd"><pre id="cmd-chrome"><span class="p">$ </span>git clone https://github.com/serkankorkut/mask2ai.git</pre><button class="copy" data-copy="cmd-chrome-raw" type="button">Copy</button></div>
