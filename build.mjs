@@ -11,7 +11,7 @@ const app = {
   name: "mask2ai",
   alternateName: "mask to AI",
   url: `${site}/`,
-  keywords: "PII redaction, ChatGPT PII redactor, Claude Code privacy, mask personal data, data masking, anonymize data for ChatGPT",
+  keywords: "AI privacy, protect personal data from ChatGPT, Claude Code privacy, mask personal data, data masking, PII redaction, anonymize data for ChatGPT",
   sameAs: ["https://github.com/serkankorkut/mask2ai"],
   applicationCategory: "SecurityApplication",
   applicationSubCategory: "Privacy tool",

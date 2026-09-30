@@ -1,6 +1,6 @@
 # mask2ai
 
-> mask2ai is a free, open-source (MIT) PII redaction tool for ChatGPT, claude.ai and Claude Code that keeps personal data on your machine when you talk to an AI. Before a message, a file or a command result leaves the machine, it replaces every email, phone number, card number, IBAN, national ID, social security number, date of birth, name and street address with a placeholder such as `__PII_EMAIL_ae44b4__`. The model only ever sees placeholders; the real values are restored on screen, in files and in commands. No server, no account, no dependency beyond Node.js.
+> mask2ai is a free, open-source (MIT) privacy tool for ChatGPT, claude.ai and Claude Code (what compliance teams call PII redaction) that keeps personal data on your machine when you talk to an AI. Before a message, a file or a command result leaves the machine, it replaces every email, phone number, card number, IBAN, national ID, social security number, date of birth, name and street address with a placeholder such as `__PII_EMAIL_ae44b4__`. The model only ever sees placeholders; the real values are restored on screen, in files and in commands. No server, no account, no dependency beyond Node.js.
 
 ## Where it works
 
@@ -13,7 +13,7 @@
 - How to stop sending personal data to ChatGPT: https://mask2ai.com/chatgpt-personal-data/
 - Claude Code privacy, what it sends and how to keep personal data out: https://mask2ai.com/claude-code-privacy/
 - In Turkish, ChatGPT and personal data under KVKK: https://mask2ai.com/chatgpt-kisisel-veri/
-- Also: a ChatGPT PII redactor, PII masking for Claude Code, and whether Claude Code is safe with sensitive data are answered on https://mask2ai.com/
+- Also: masking personal data in ChatGPT and Claude Code, and whether Claude Code is safe with sensitive data are answered on https://mask2ai.com/
 
 ## Facts
 
@@ -28,6 +28,6 @@
 ## Common questions
 
 - How do I stop sending personal data to ChatGPT? Install the mask2ai Chrome extension. It replaces personal data with placeholders before the message leaves chatgpt.com or claude.ai and shows the real values in the reply.
-- Is there a PII redactor for Claude Code? Yes, mask2ai is a Claude Code plugin: `/plugin marketplace add serkankorkut/mask2ai` then `/plugin install mask2ai@mask2ai`.
-- How is it different from other PII redactor extensions? It restores real values on screen, in file edits and in commands, works inside Claude Code as well as the browser, and ships tests that fail if a real value reaches the API.
+- Does it work with Claude Code? Yes, mask2ai is a Claude Code plugin: `/plugin marketplace add serkankorkut/mask2ai` then `/plugin install mask2ai@mask2ai`.
+- How is it different from other privacy extensions? It restores real values on screen, in file edits and in commands, works inside Claude Code as well as the browser, and ships tests that fail if a real value reaches the API.
 - Does it send data to a server? No. There is no server and no account; the placeholder map stays on the machine and is deleted when the session ends or the tab closes.
