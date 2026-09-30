@@ -4,10 +4,12 @@
 <section class="section">
   <h1>Privacy</h1>
   <p class="lede">mask2ai exists to keep personal data off the wire. It has no wire of its own.</p>
+  <p>Last updated 30 September 2026.</p>
 </section>
 <section class="section">
   <h2>What it reads</h2>
-  <p>In Claude Code: the prompt you submit, the input and output of each tool call, and the text of each reply as it streams, all handed to it by Claude Code's hook system. In Chrome: the body of chat requests to claude.ai and chatgpt.com, and the text rendered on those pages. Nothing else.</p>
+  <p>In Claude Code: the prompt you submit, the input and output of each tool call, and the text of each reply as it streams, all handed to it by Claude Code's hook system. In Chrome: the body of chat requests to claude.ai and chatgpt.com, files you upload on those sites, and the text rendered on those pages. Nothing else.</p>
+  <p>Within that, it looks for personal data: names, email addresses, phone numbers, national ID and social security numbers, dates of birth and street addresses, and payment data such as card numbers and IBANs. All of it is handled inside your browser tab or your Claude Code session. None of it is sold, shared, or used for anything except masking and restoring it.</p>
 </section>
 <section class="section">
   <h2>What it stores</h2>
@@ -20,6 +22,10 @@
 </section>
 <section class="section">
   <h2>The code</h2>
-  <p>About 300 lines of JavaScript with no dependency beyond Node.js, MIT licensed, at <a href="https://github.com/serkankorkut/mask2ai">github.com/serkankorkut/mask2ai</a>. The repository ships a proof that captures every byte Claude Code sends and a headless check of the extension on both sites.</p>
+  <p>About 500 lines of JavaScript and a 70-line Swift helper that reads text in images and PDFs on macOS, with no dependencies beyond Node.js and the operating system, MIT licensed, at <a href="https://github.com/serkankorkut/mask2ai">github.com/serkankorkut/mask2ai</a>. The repository ships a proof that captures every byte Claude Code sends and a headless check of the extension on both sites.</p>
+</section>
+<section class="section">
+  <h2>Contact</h2>
+  <p>Questions about privacy: open an issue at <a href="https://github.com/serkankorkut/mask2ai/issues">github.com/serkankorkut/mask2ai/issues</a>. mask2ai is not affiliated with OpenAI or Anthropic.</p>
 </section>
 </div>
